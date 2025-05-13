@@ -5,9 +5,16 @@ Retrieves the list of tenants groups.
 .DESCRIPTION
 The Get-CIPPTenantGroups function retrieves a list of tenant groups from CIPP.
 
+.PARAMETER
+TenantGroupId
+Filter search to provided Tenant Group Id.
+
 .EXAMPLE
 Get-CIPPTenantGroups
-Retrieves the list of current tenants groups.
+Retrieves the list of all current tenants groups.
+
+Get-CIPPTenantGroups -TenantGroupId s9la0f-99230-a92kd9
+Searches for and return Tenant group with specified Id.
 
 #>
 
@@ -18,6 +25,13 @@ function Get-CIPPTenantGroups {
     Write-Verbose 'Getting Tenant Groups List'
 
     $endpoint = '/api/listtenantgroups'
+    $params = @{}
+
+    if ($TenantGroupId) {
+        $params = @{
+                groupId = '$TenantGroupId'
+             }
+    }
 
     $request = Invoke-CIPPRestMethod -Endpoint $endpoint -Method GET
 
@@ -25,7 +39,7 @@ function Get-CIPPTenantGroups {
     if ($request) {
         foreach ($result in $request.results){
             [PSCustomObject]@{
-                TenantGroupID     = $result.Id
+                TenantGroupId     = $result.Id
                 Name              = $result.Name
                 Description       = $result.Description
                 Members           = $result.Members
