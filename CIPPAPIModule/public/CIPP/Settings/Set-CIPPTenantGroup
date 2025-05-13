@@ -9,21 +9,19 @@ The Set-CIPPTenantGroup function is used to add, edit, or remove a tenant group 
 Add/Delete/Update
 
 .PARAMETER TenantGroupID
-Specifies the ID
+Specifies the group ID to modify/delete. Is ignored for Add actions.
 
 .PARAMETER Name
-Only for use when creating a new group.
+Specify the Name for the Tenant Group.
 
 .PARAMETER Description
 Updates the group description, if provided.
 
 .PARAMETER AddMembers
-Indicates whether to add a customer tenant to the membership list of the group. This switch cannot be used together with the RemoveMember switch.
-This needs to be an array of customer tenant ID Guids (1fefeb73-0947-4803-a720-92be0e9a7d8e)
+Specifiy which tenants to add to the group. This needs to be an array of customer tenant ID Guids (1fefeb73-0947-4803-a720-92be0e9a7d8e)
 
 .PARAMETER RemoveMembers
-Indicates whether to remove the customer tenant from the exclusion list. This switch cannot be used together with the AddExclusion switch.
-This needs to be an array of customer tenant ID Guids (1fefeb73-0947-4803-a720-92be0e9a7d8e)
+Specifiy which tenants to remove from the group. This needs to be an array of customer tenant ID Guids (1fefeb73-0947-4803-a720-92be0e9a7d8e)
 
 .EXAMPLE
 
@@ -42,64 +40,87 @@ function Set-CIPPTenantGroup {
         [Paramter()]
         [string]$GroupDescription,
         [Parameter()]
-        [switch]$AddMembers,
+        [switch[]]$AddMembers,
         [Parameter()]
-        [switch]$RemoveMembers
+        [switch[]]$RemoveMembers
     )
-
-    # Ensure only one of the Member change switches is used
-    if ($AddMembers -and $RemoveMembers) {
-        throw 'You cannot use both -AddMember and -RemoveMember switches at the same time.'
-    }
 
     $endpoint = '/api/EditTenantGroup'
 
+    # Test for existing group
+    $existingGroup = $null
+
     if ($Action -EQ 'Add') {
-        if (-not $GroupName -and -not $Description -and -not $AddMember) {
+        if (-not $GroupName -and -not $Description) {
             throw 'Missing required field(s) for action `'AddEdit`''
         }
 
-        $existingGroup = $null
-        if ($TenantGroupId) {
-           Write-Verbose 'Checking for existing group.'
-           $existingGroup = Get-CippTenantGroups | Where-Object $_.Name -EQ $GroupName 
+        # Check for existing group via name
+        $existingGroup = Get-CippTenantGroups -TenantGroupId $TenantGroupId | Where-Object $_.Name -EQ $GroupName 
+
+        if ($existingGroup) {
+             throw 'Unable to create new Tenant Group. A group with the specified name already exisits.'
         }
 
-        if (-not $existingGroup) {
-
-           $params = @{}
-           $body = @{
-                Action = 'AddEdit',
-                groupName = $GroupName,
-                groupDescription = $GroupDescription,
-                members = $AddMembers
-              }  
-           Write-Verbose "Adding new Tenant Group `'$Name`'."
-           Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params -Body $body -Method POST
-        } else {
-             throw 'Tenant Group with the specified name already exisits.'
-        }
-       
+        $params = @{}
+        $body = @{
+               Action = 'AddEdit',
+               groupName = $GroupName,
+               groupDescription = $GroupDescription,
+               members = $AddMembers
+           }  
+        Write-Verbose "Adding new Tenant Group `'$Name`'."
+        Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params -Body $body -Method POST
         
     }
 
-    if ($Action -EQ 'Edit' -and -not $Description -and -not $AddMember -and -not $RemoveMember) {
+    # Check for existing group via Id
+    if ($TenantGroupId) {
+         Write-Verbose 'Checking for existing group with matching Id.'
+         $existingGroup = Get-CippTenantGroups -TenantGroupId $TenantGroupId
+    }
+
+    if ($Action -EQ 'Edit' -and -not $existingGroup) {
+        throw 'Specified group Id does not exist. Unable to edit non-existant group.'
+    }
+    if ($Action -EQ 'Edit' -and -not $GroupName -not $Description -and -not $AddMember -and -not $RemoveMember) {
         throw 'You must specify at least 1 property to update.'
 
         $params = @{}
         $body = @{
-           Action = 'AddEdit'
+           Action           = 'AddEdit'
+           groupId          = $TenantGroupId
+           groupName        = $existingGroup.Name
+           groupDescription = $existingGroup.Description
+           members          = $existingGroup.Members.customerId
         }
+
+        # Set updated properties
+        if ($GroupName) {
+            $body['groupName'] = $GroupName
+        }
+        if ($GroupDescription) {
+            $body['groupDescription'] = $GroupDescription
+        }
+        if ($AddMembers) {
+            foreach ($member in $AddMembers ) { if ($member -notmatch $existingGroupMembers.customerId) { $body['members'] += $member }
+        }
+        if ($RemoveMembers) {
+            throw 'Remove members not yet implemented.'
+        }
+
         Write-Verbose "Updating Tenant Group $CustomerTenantID."
         Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params -Body $body -Method POST
     }
 
-    if ($Action -EQ 'Delete' -and -not $TenantGroupID) {
-        throw 'Tenant Group to be deleted not specified'
+
+    if ($Action -EQ 'Delete' -and -not $existingGroup) {
+        throw 'Tenant Group to be deleted not found/specified.'
 
         $params = @{}
         $body = @{
-            ???
+            Action           = 'Delete'
+            groupId          = $TenantGroupId
         }
         Write-Verbose "Deleting Tenant Group $TenantGroupID."
         Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params -Body $body -Method POST
