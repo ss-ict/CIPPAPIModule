@@ -1,0 +1,23 @@
+<#
+.SYNOPSIS
+Retrieves the list of tenants groups.
+
+.DESCRIPTION
+The Get-CIPPTenantGroups function retrieves a list of tenant groups from CIPP.
+
+.EXAMPLE
+Get-CIPPTenantGroups
+Retrieves the list of current tenants groups.
+
+#>
+
+function Get-CIPPTenantGroups {
+
+    Write-Verbose 'Getting Tenant Groups List'
+
+    $endpoint = '/api/listtenantgroups'
+    $params = @{}
+
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
+        
+}
