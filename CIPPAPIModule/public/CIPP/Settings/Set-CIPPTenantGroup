@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-Adds/Updates tenant groups in the CIPP system.
+Add/Update/Delete a tenant group in the CIPP system.
 
 .DESCRIPTION
-The Set-CIPPSetTenantGroup function is used to add, edit, or remove a tenant group from the CIPP system. 
+The Set-CIPPTenantGroup function is used to add, edit, or remove a tenant group from the CIPP system. 
 
 .PARAMETER Action
 Add/Delete/Update
