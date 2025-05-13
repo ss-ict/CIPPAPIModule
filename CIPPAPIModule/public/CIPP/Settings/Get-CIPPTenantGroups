@@ -12,6 +12,8 @@ Retrieves the list of current tenants groups.
 #>
 
 function Get-CIPPTenantGroups {
+    [CmdletBinding()]
+    Param()
 
     Write-Verbose 'Getting Tenant Groups List'
 
