@@ -18,8 +18,22 @@ function Get-CIPPTenantGroups {
     Write-Verbose 'Getting Tenant Groups List'
 
     $endpoint = '/api/listtenantgroups'
-    $params = @{}
 
-    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
+    $request = Invoke-CIPPRestMethod -Endpoint $endpoint -Method GET
+
+    # Convert the result to a more friendly PowerShell object
+    if ($request) {
+        foreach ($result in $request.results){
+            [PSCustomObject]@{
+                TenantGroupID     = $result.Id
+                Name              = $result.Name
+                Description       = $result.Description
+                Members           = $result.Members
+            }
+        }
+    } else {
+        Write-Warning 'No tenant groups found'
+        $null
+    }
         
 }
