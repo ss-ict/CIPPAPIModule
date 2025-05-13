@@ -33,14 +33,14 @@ function Set-CIPPTenantGroup {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $true)]
-        [ValidateSet('Add', 'Delete', 'Update')] 
+        [ValidateSet('AddEdit', 'Delete')] 
         [string]$Action,
         [Parameter()]
-        [string]$TenantGroupID,
+        [string]$TenantGroupId,
         [Paramter()]
-        [string]$Name,
+        [string]$GroupName,
         [Paramter()]
-        [string]$Description,
+        [string]$GroupDescription,
         [Parameter()]
         [switch]$AddMember,
         [Parameter()]
@@ -54,22 +54,23 @@ function Set-CIPPTenantGroup {
 
     $endpoint = '/api/EditTenantGroup'
 
-    if ($Action -EQ 'Add') {
-        if (-not $Name -and -not $Description) {
-            throw 'Missing required field(s) for action `'Add`''
-        }
-        if ($TenantGroupID) {
-           Write-Verbose 'Ignoring specified TenantGroupID for new group. A new ID will be generated randomly'
-        }
-        if ($RemoveMember) {
-            throw 'Cannot remove member from a yet to be created group'
+    if ($Action -EQ 'AddEdit') {
+        if (-not $TenantGroupId -and -not $GroupName -and -not $Description) {
+            throw 'Missing required field(s) for action `'AddEdit`''
         }
 
-        $params = @{
-            AddExclusion = $true
+        $existingGroup = $null
+        if ($TenantGroupId) {
+           Write-Verbose 'Checking for existing group.'
+           $existingGroup = Get-CippTenantGroups -TenantGroupId $TenantGroupId
         }
+
+        $params = @{}
         $body = @{
-            value = $CustomerTenantID
+            Action = 'AddEdit',
+            groupName = $GroupName,
+            groupDescription = $GroupDescription
+            
         }
         Write-Verbose "Adding new Tenant Group `'$Name`'."
         Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params -Body $body -Method POST
@@ -79,11 +80,9 @@ function Set-CIPPTenantGroup {
     if ($Action -EQ 'Update' -and -not $Description -and -not $AddMember -and -not $RemoveMember) {
         throw 'You must specify at least 1 property to update.'
 
-        $params = @{
-            ???
-        }
+        $params = @{}
         $body = @{
-            ????
+           Action = 'AddEdit'
         }
         Write-Verbose "Updating Tenant Group $CustomerTenantID."
         Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params -Body $body -Method POST
@@ -92,9 +91,7 @@ function Set-CIPPTenantGroup {
     if ($Action -EQ 'Delete' -and -not $TenantGroupID) {
         throw 'Tenant Group to be deleted not specified'
 
-        $params = @{
-           ???
-        }
+        $params = @{}
         $body = @{
             ???
         }
