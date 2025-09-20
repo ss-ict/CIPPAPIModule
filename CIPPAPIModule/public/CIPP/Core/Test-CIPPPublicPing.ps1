@@ -3,19 +3,28 @@
 Tests connectivity to the CIPP API using the public ping endpoint.
 
 .DESCRIPTION
-The Test-CIPPPublicPing function tests connectivity to the CIPP API using the public ping endpoint. It uses the Invoke-CIPPRestMethod function to make a REST API call to the public ping endpoint, which returns system status information including cold start status and timestamp.
+This function sends a GET request to the CIPP public ping endpoint to prevent cold starts and verify API availability.
+
+.PARAMETER CIPPPublicURL
+The base URL for the GUI of the CIPP instance (e.g., 'https://cipp.domain.com'). No trailing slash.
 
 .EXAMPLE
-Test-CIPPPublicPing
-Tests connectivity to the CIPP API and returns system status information.
+Test-CIPPPublicPing -CIPPPublicURL 'https://cipp.domain.com'
+Tests connectivity to the CIPP API at the specified public URL.
+
+.NOTES
+This function does not require authentication to the CIPP API.
 #>
 
 function Test-CIPPPublicPing {
     [CmdletBinding()]
-    Param()
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$CIPPPublicURL
+    )
 
-    Write-Verbose "Testing CIPP API connectivity via public ping endpoint"
-    $endpoint = '/api/PublicPing'
+    Write-Verbose 'Testing CIPP API connectivity via public ping endpoint'
+    $endpoint = $CIPPPublicURL.TrimEnd('/') + '/api/PublicPing'
 
-    Invoke-CIPPRestMethod -Endpoint $endpoint -Method 'GET'
+    Invoke-WebRequest -Uri $endpoint -Method GET
 }
