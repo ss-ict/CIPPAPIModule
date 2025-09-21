@@ -13,6 +13,8 @@ $IgnoredEndpoints = @(
     'Invoke-AddSiteBulk' # Makes no sense to have this in the CIPP API Module, when you can just use the add single site endpoint in a foreach
     'Invoke-CIPPOffboardingJob' # This endpoint is the endpoint another offboarding endpoint calls, so it should not be in the CIPP API Module
     'Invoke-ExecDeviceCodeLogon' # Used for SAM setup. Cant even get here as you cant setup the API before you need this.
+    'Invoke-ListSharedMailboxStatistics' # Seems unused
+    'Invoke-ListSharepointSettings' # Seems unused
 )
 
 # Remove ignored endpoints from AllCippEndpoints
