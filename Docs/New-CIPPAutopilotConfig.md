@@ -27,7 +27,7 @@ If set to true, users will be standard users. If false, users will be administra
 If set to true, the device will be configured for shared use. If false, it will be configured for single user.
 
   ## **-AssignTo**
-> ![Foo](https://img.shields.io/badge/Type-String-Blue?) ![Foo](https://img.shields.io/badge/Mandatory-FALSE-Green?) \
+> ![Foo](https://img.shields.io/badge/Type-Boolean-Blue?) ![Foo](https://img.shields.io/badge/Mandatory-FALSE-Green?) ![Foo](https://img.shields.io/badge/DefaultValue-False-Blue?color=5547a8)\
 Optional. The assignment target for the profile.
 
   ## **-DeviceNameTemplate**
@@ -59,7 +59,7 @@ Enable or disable terms of service page in OOBE.
 Enable or disable automatic keyboard selection.
 
   ## **-Language**
-> ![Foo](https://img.shields.io/badge/Type-String-Blue?) ![Foo](https://img.shields.io/badge/Mandatory-FALSE-Green?) ![Foo](https://img.shields.io/badge/DefaultValue-en-US-Blue?color=5547a8)\
+> ![Foo](https://img.shields.io/badge/Type-String-Blue?) ![Foo](https://img.shields.io/badge/Mandatory-FALSE-Green?) ![Foo](https://img.shields.io/badge/DefaultValue-os-default-Blue?color=5547a8)\
 Language code for the deployment.
 
  #### EXAMPLE 1
