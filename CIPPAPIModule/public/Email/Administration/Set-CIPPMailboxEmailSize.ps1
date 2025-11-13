@@ -47,12 +47,7 @@ This function requires appropriate permissions to manage mailbox settings in Exc
 function Set-CIPPMailboxEmailSize {
     [CmdletBinding(DefaultParameterSetName = 'Both_UPN')]
     param (
-        [Parameter(Mandatory = $true, ParameterSetName = 'SendOnly_UPN')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ReceiveOnly_UPN')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Both_UPN')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'SendOnly_ID')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'ReceiveOnly_ID')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Both_ID')]
+        [Parameter(Mandatory = $true)]
         [string]$CustomerTenantID,
         [Parameter(Mandatory = $true, ParameterSetName = 'SendOnly_UPN')]
         [Parameter(Mandatory = $true, ParameterSetName = 'ReceiveOnly_UPN')]
