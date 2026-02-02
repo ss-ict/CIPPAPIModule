@@ -32,20 +32,22 @@ Cancels the specified subscription.
 Requires appropriate permissions to manage CSP licenses.
 #>
 
-# TODO - Fix this function so it actually works
+# After a discussion with the CIPP team, it was decided that this function will not be implemented.
+# Instead, users should use the CIPP portal to manage CSP licenses.
+
 function Set-CIPPCSPLicense {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [string]$CustomerTenantID,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [string]$SKU,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [string[]]$SubscriptionIds,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [ValidateSet('Add', 'Remove', 'Update', 'Cancel')]
         [string]$Action,
 
@@ -53,21 +55,5 @@ function Set-CIPPCSPLicense {
         [int]$Quantity
     )
 
-    return 'This function is not implemented yet'
-
-    Write-Verbose "Managing CSP license SKU: $SKU for tenant $CustomerTenantID with action $Action"
-
-    $endpoint = '/api/ExecCSPLicense'
-    $body = @{
-        tenantFilter    = $CustomerTenantID
-        SKU             = $SKU
-        subscriptionIds = $SubscriptionIds
-        action          = $Action
-    }
-
-    if ($Action -in @('Add', 'Update')) {
-        $body['quantity'] = $Quantity
-    }
-
-    Invoke-CIPPRestMethod -Endpoint $endpoint -Body $body -Method Post
+    return 'This function is not implemented yet - and never will be. Use CIPP to manage CSP licenses instead.'
 }

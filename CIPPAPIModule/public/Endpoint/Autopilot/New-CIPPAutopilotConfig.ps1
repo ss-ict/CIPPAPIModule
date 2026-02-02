@@ -87,7 +87,7 @@ function New-CIPPAutopilotConfig {
         [bool]$SharedDevice = $false,
         
         [Parameter(Mandatory = $false)]
-        [string]$AssignTo,
+        [bool]$AssignTo,
         
         [Parameter(Mandatory = $false)]
         [string]$DeviceNameTemplate,
@@ -111,7 +111,7 @@ function New-CIPPAutopilotConfig {
         [bool]$AutoKeyboard = $false,
         
         [Parameter(Mandatory = $false)]
-        [string]$Language = 'en-US'
+        [string]$Language = 'os-default'
     )
 
     Write-Verbose "Creating Autopilot configuration for $($CustomerTenantID.Count) tenant(s)"
