@@ -21,19 +21,27 @@ Switch parameter. If specified, retrieves the members of the specified group.
 > ![Foo](https://img.shields.io/badge/Type-SwitchParameter-Blue?) ![Foo](https://img.shields.io/badge/Mandatory-FALSE-Green?) ![Foo](https://img.shields.io/badge/DefaultValue-False-Blue?color=5547a8)\
 Switch parameter. If specified, retrieves the owners of the specified group.
 
+  ## **-UseReportDB**
+> ![Foo](https://img.shields.io/badge/Type-SwitchParameter-Blue?) ![Foo](https://img.shields.io/badge/Mandatory-FALSE-Green?) ![Foo](https://img.shields.io/badge/DefaultValue-False-Blue?color=5547a8)\
+When specified, retrieves the groups list from the CIPP report database cache instead of live Microsoft Graph data. Only applies to the list view (when no -GroupID, -Members, or -Owners is supplied). Use 'AllTenants' with this switch for cached cross-tenant data.
+
  #### EXAMPLE 1
 ```powershell
 PS > Get-CIPPGroups -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778"
 ```
  #### EXAMPLE 2
 ```powershell
-PS > Get-CIPPGroups -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778" -GroupID "abcdefg"
+PS > Get-CIPPGroups -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778" -UseReportDB
 ```
  #### EXAMPLE 3
 ```powershell
-PS > Get-CIPPGroups -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778" -GroupID "abcdefg" -Members
+PS > Get-CIPPGroups -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778" -GroupID "abcdefg"
 ```
  #### EXAMPLE 4
+```powershell
+PS > Get-CIPPGroups -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778" -GroupID "abcdefg" -Members
+```
+ #### EXAMPLE 5
 ```powershell
 PS > Get-CIPPGroups -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778" -GroupID "abcdefg" -Owners
 ```
