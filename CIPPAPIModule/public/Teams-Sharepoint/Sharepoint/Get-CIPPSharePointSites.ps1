@@ -25,6 +25,13 @@ Retrieves only the URLs of the SharePoint sites for the customer tenant "contoso
 .EXAMPLE
 Get-CIPPSharePointSites -CustomerTenantID "contoso.onmicrosoft.com" -UserUPN "user@contoso.com"
 Retrieves SharePoint sites for the user "user@contoso.com" in the customer tenant "contoso.onmicrosoft.com".
+
+.PARAMETER UseReportDB
+When specified, retrieves SharePoint site usage from the CIPP report database cache instead of live data. Use 'AllTenants' with this switch for cached cross-tenant data.
+
+.EXAMPLE
+Get-CIPPSharePointSites -CustomerTenantID "contoso.onmicrosoft.com" -UseReportDB
+Retrieves cached SharePoint site usage for the "contoso.onmicrosoft.com" tenant from the report database.
 #>
 
 function Get-CIPPSharePointSites {
@@ -35,7 +42,9 @@ function Get-CIPPSharePointSites {
         [Parameter(Mandatory = $false)]
         [switch]$urlonly,
         [Parameter(Mandatory = $false)]
-        [string]$UserUPN
+        [string]$UserUPN,
+        [Parameter(Mandatory = $false)]
+        [switch]$UseReportDB
     )
 
     Write-Verbose "Getting sites for $CustomerTenantID"
@@ -44,6 +53,7 @@ function Get-CIPPSharePointSites {
         tenantFilter = $CustomerTenantID
         type         = 'SharePointSiteUsage'
         userupn      = $UserUPN
+        UseReportDB  = $UseReportDB.IsPresent
     }
 
     if ($urlonly) {

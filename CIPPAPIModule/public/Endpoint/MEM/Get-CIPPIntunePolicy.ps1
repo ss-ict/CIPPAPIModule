@@ -14,6 +14,9 @@ The ID of the policy. This parameter is optional.
 .PARAMETER Urlname
 The URL name. This parameter is optional.
 
+.PARAMETER UseReportDB
+When specified, retrieves the Intune policy list from the CIPP report database cache instead of live Microsoft Graph data. Only applies to the list view (when no -PolicyID is supplied). Use 'AllTenants' with this switch for cached cross-tenant data.
+
 .EXAMPLE
 Get-CIPPIntunePolicy -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778" -PolicyID "policy123" -Urlname "example"
 This example retrieves the Intune policies for the customer with the tenant ID "7ced1621-b8f7-4231-868c-bc6b1a2f1778", using the policy ID "policy123" and the URL name "example".
@@ -21,6 +24,10 @@ This example retrieves the Intune policies for the customer with the tenant ID "
 .EXAMPLE
 Get-CIPPIntunePolicy -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778"
 This example retrieves all Intune policies for the customer with the tenant ID "7ced1621-b8f7-4231-868c-bc6b1a2f1778".
+
+.EXAMPLE
+Get-CIPPIntunePolicy -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778" -UseReportDB
+This example retrieves the cached Intune policy list for the customer tenant from the report database.
 
 #>
 Function Get-CIPPIntunePolicy {
@@ -31,7 +38,9 @@ Function Get-CIPPIntunePolicy {
         [Parameter(Mandatory = $false)]
         [string]$PolicyID,
         [Parameter(Mandatory = $false)]
-        [string]$Urlname
+        [string]$Urlname,
+        [Parameter(Mandatory = $false)]
+        [switch]$UseReportDB
     )
 
     Write-Verbose "Getting Intune policies for customer: $CustomerTenantID"
@@ -47,6 +56,7 @@ Function Get-CIPPIntunePolicy {
         tenantFilter = $CustomerTenantID
         URLName      = $urlname
         id           = $PolicyID
+        UseReportDB  = $UseReportDB.IsPresent
     }
     
     # Use the Invoke-CIPPRequest function to make the request

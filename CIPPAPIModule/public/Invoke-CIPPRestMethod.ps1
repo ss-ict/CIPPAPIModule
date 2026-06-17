@@ -41,7 +41,7 @@ function Invoke-CIPPRestMethod {
         [string]$Endpoint,
         [hashtable]$Params = @{},
         [ValidateSet('GET', 'POST')][string]$Method = 'GET',
-        [hashtable]$Body = @{},
+        [hashtable[]]$Body = @{},
         [string]$ContentType = 'application/json',
         [string]$Authorization = $null
     )
@@ -65,7 +65,7 @@ function Invoke-CIPPRestMethod {
     $UriBuilder = [System.UriBuilder]('{0}{1}' -f $script:CIPPAPIUrl, $Endpoint)
     $UriBuilder.Query = $Request
 
-    $BodyJson = $Body | ConvertTo-Json -Depth 10
+    $BodyJson = ConvertTo-Json -InputObject $Body -Depth 10
 
     $Request = @{
         Uri         = $UriBuilder.ToString()

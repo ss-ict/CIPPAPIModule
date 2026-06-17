@@ -189,6 +189,7 @@ You must enter that text exactly, otherwise the assignment does not trigger.
   - [Get-CIPPContacts](./Docs/Get-CIPPContacts.md)
   - [Get-CIPPContactTemplates](./Docs/Get-CIPPContactTemplates.md)
   - [Get-CIPPExchangeTransportRuleTemplates](./Docs/Get-CIPPExchangeTransportRuleTemplates.md)
+  - [Get-CIPPHVEAccounts](./Docs/Get-CIPPHVEAccounts.md)
   - [Get-CIPPMailboxes](./Docs/Get-CIPPMailboxes.md)
   - [Get-CIPPMailboxMobileDevices](./Docs/Get-CIPPMailboxMobileDevices.md)
   - [Get-CIPPMailboxPermissions](./Docs/Get-CIPPMailboxPermissions.md)
@@ -222,6 +223,7 @@ You must enter that text exactly, otherwise the assignment does not trigger.
   - [Get-CIPPEnabledSharedMailboxes](./Docs/Get-CIPPEnabledSharedMailboxes.md)
   - [Get-CIPPGlobalAddressList](./Docs/Get-CIPPGlobalAddressList.md)
   - [Get-CIPPMailboxCAS](./Docs/Get-CIPPMailboxCAS.md)
+  - [Get-CIPPMailboxForwarding](./Docs/Get-CIPPMailboxForwarding.md)
   - [Get-CIPPMailboxStatistics](./Docs/Get-CIPPMailboxStatistics.md)
 - Resources
   - [Add-CIPPEquipmentMailbox](./Docs/Add-CIPPEquipmentMailbox.md)
@@ -271,6 +273,7 @@ You must enter that text exactly, otherwise the assignment does not trigger.
 - [Get-CIPPContacts](./Docs/Get-CIPPContacts.md)
 - [Get-CIPPContactTemplates](./Docs/Get-CIPPContactTemplates.md)
 - [Get-CIPPExchangeTransportRuleTemplates](./Docs/Get-CIPPExchangeTransportRuleTemplates.md)
+- [Get-CIPPHVEAccounts](./Docs/Get-CIPPHVEAccounts.md)
 - [Get-CIPPMailboxes](./Docs/Get-CIPPMailboxes.md)
 - [Get-CIPPMailboxMobileDevices](./Docs/Get-CIPPMailboxMobileDevices.md)
 - [Get-CIPPMailboxPermissions](./Docs/Get-CIPPMailboxPermissions.md)
@@ -303,6 +306,7 @@ You must enter that text exactly, otherwise the assignment does not trigger.
 - [Get-CIPPEnabledSharedMailboxes](./Docs/Get-CIPPEnabledSharedMailboxes.md)
 - [Get-CIPPGlobalAddressList](./Docs/Get-CIPPGlobalAddressList.md)
 - [Get-CIPPMailboxCAS](./Docs/Get-CIPPMailboxCAS.md)
+- [Get-CIPPMailboxForwarding](./Docs/Get-CIPPMailboxForwarding.md)
 - [Get-CIPPMailboxStatistics](./Docs/Get-CIPPMailboxStatistics.md)
 - [Add-CIPPEquipmentMailbox](./Docs/Add-CIPPEquipmentMailbox.md)
 - [Get-CIPPEquipment](./Docs/Get-CIPPEquipment.md)
@@ -357,12 +361,15 @@ You must enter that text exactly, otherwise the assignment does not trigger.
   - [Set-CIPPAutopilotDeviceGroupTag](./Docs/Set-CIPPAutopilotDeviceGroupTag.md)
   - [Set-CIPPAutoPilotSync](./Docs/Set-CIPPAutoPilotSync.md)
 - MEM
+  - [Get-CIPPAppProtectionPolicies](./Docs/Get-CIPPAppProtectionPolicies.md)
   - [Get-CIPPAssignmentFilters](./Docs/Get-CIPPAssignmentFilters.md)
   - [Get-CIPPAssignmentFilterTemplates](./Docs/Get-CIPPAssignmentFilterTemplates.md)
+  - [Get-CIPPCompliancePolicies](./Docs/Get-CIPPCompliancePolicies.md)
   - [Get-CIPPDeviceDetails](./Docs/Get-CIPPDeviceDetails.md)
   - [Get-CIPPGetBitLockerKey](./Docs/Get-CIPPGetBitLockerKey.md)
   - [Get-CIPPIntuneIntents](./Docs/Get-CIPPIntuneIntents.md)
   - [Get-CIPPIntunePolicy](./Docs/Get-CIPPIntunePolicy.md)
+  - [Get-CIPPIntuneReusableSettings](./Docs/Get-CIPPIntuneReusableSettings.md)
   - [Get-CIPPIntuneScript](./Docs/Get-CIPPIntuneScript.md)
   - [Get-CIPPIntuneTemplates](./Docs/Get-CIPPIntuneTemplates.md)
   - [Get-CIPPLocalAdminPassword](./Docs/Get-CIPPLocalAdminPassword.md)
@@ -391,12 +398,15 @@ You must enter that text exactly, otherwise the assignment does not trigger.
 - [Rename-CIPPAutopilotDevice](./Docs/Rename-CIPPAutopilotDevice.md)
 - [Set-CIPPAutopilotDeviceGroupTag](./Docs/Set-CIPPAutopilotDeviceGroupTag.md)
 - [Set-CIPPAutoPilotSync](./Docs/Set-CIPPAutoPilotSync.md)
+- [Get-CIPPAppProtectionPolicies](./Docs/Get-CIPPAppProtectionPolicies.md)
 - [Get-CIPPAssignmentFilters](./Docs/Get-CIPPAssignmentFilters.md)
 - [Get-CIPPAssignmentFilterTemplates](./Docs/Get-CIPPAssignmentFilterTemplates.md)
+- [Get-CIPPCompliancePolicies](./Docs/Get-CIPPCompliancePolicies.md)
 - [Get-CIPPDeviceDetails](./Docs/Get-CIPPDeviceDetails.md)
 - [Get-CIPPGetBitLockerKey](./Docs/Get-CIPPGetBitLockerKey.md)
 - [Get-CIPPIntuneIntents](./Docs/Get-CIPPIntuneIntents.md)
 - [Get-CIPPIntunePolicy](./Docs/Get-CIPPIntunePolicy.md)
+- [Get-CIPPIntuneReusableSettings](./Docs/Get-CIPPIntuneReusableSettings.md)
 - [Get-CIPPIntuneScript](./Docs/Get-CIPPIntuneScript.md)
 - [Get-CIPPIntuneTemplates](./Docs/Get-CIPPIntuneTemplates.md)
 - [Get-CIPPLocalAdminPassword](./Docs/Get-CIPPLocalAdminPassword.md)
@@ -718,5 +728,8 @@ You must enter that text exactly, otherwise the assignment does not trigger.
 ##Special Thanks
 
 Special thanks to @KelvinTegelaar, @JohnDuprey, @rvdwegen and @Jr7468. I Could not have got this far without you!
+
+
+
 
 

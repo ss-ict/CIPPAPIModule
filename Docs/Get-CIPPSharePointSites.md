@@ -17,6 +17,10 @@ Specifies whether to retrieve only the URLs of the SharePoint sites. By default,
 > ![Foo](https://img.shields.io/badge/Type-String-Blue?) ![Foo](https://img.shields.io/badge/Mandatory-FALSE-Green?) \
 The user's UPN (User Principal Name) for which to retrieve SharePoint sites. This parameter is optional.
 
+  ## **-UseReportDB**
+> ![Foo](https://img.shields.io/badge/Type-SwitchParameter-Blue?) ![Foo](https://img.shields.io/badge/Mandatory-FALSE-Green?) ![Foo](https://img.shields.io/badge/DefaultValue-False-Blue?color=5547a8)\
+When specified, retrieves SharePoint site usage from the CIPP report database cache instead of live data. Use 'AllTenants' with this switch for cached cross-tenant data.
+
  #### EXAMPLE 1
 ```powershell
 PS > Get-CIPPSharePointSites -CustomerTenantID "contoso.onmicrosoft.com"
@@ -28,5 +32,9 @@ PS > Get-CIPPSharePointSites -CustomerTenantID "contoso.onmicrosoft.com" -urlonl
  #### EXAMPLE 3
 ```powershell
 PS > Get-CIPPSharePointSites -CustomerTenantID "contoso.onmicrosoft.com" -UserUPN "user@contoso.com"
+```
+ #### EXAMPLE 4
+```powershell
+PS > Get-CIPPSharePointSites -CustomerTenantID "contoso.onmicrosoft.com" -UseReportDB
 ```
 

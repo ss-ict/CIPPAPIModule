@@ -17,9 +17,16 @@
 .PARAMETER Owners
     Switch parameter. If specified, retrieves the owners of the specified group.
 
+.PARAMETER UseReportDB
+    When specified, retrieves the groups list from the CIPP report database cache instead of live Microsoft Graph data. Only applies to the list view (when no -GroupID, -Members, or -Owners is supplied). Use 'AllTenants' with this switch for cached cross-tenant data.
+
 .EXAMPLE
     Get-CIPPGroups -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778"
     Retrieves all groups for the specified customer tenant.
+
+.EXAMPLE
+    Get-CIPPGroups -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778" -UseReportDB
+    Retrieves the cached groups list for the specified customer tenant from the report database.
 
 .EXAMPLE
     Get-CIPPGroups -CustomerTenantID "7ced1621-b8f7-4231-868c-bc6b1a2f1778" -GroupID "abcdefg"
@@ -43,9 +50,11 @@ function Get-CIPPGroups {
         [Parameter(Mandatory = $false)]
         [switch]$Members,
         [Parameter(Mandatory = $false)]
-        [switch]$Owners
+        [switch]$Owners,
+        [Parameter(Mandatory = $false)]
+        [switch]$UseReportDB
     )
-    
+
     # Validate parameters
     if (-not $GroupID -and ($Members.IsPresent -or $Owners.IsPresent)) {
         throw 'Parameter combination is not valid. Please provide a GroupID when using Members or Owners switches.'
@@ -67,6 +76,7 @@ function Get-CIPPGroups {
         GroupID      = $GroupID
         members      = $Members.IsPresent ? $true : $null
         owners       = $Owners.IsPresent ? $true : $null
+        UseReportDB  = $UseReportDB.IsPresent
     }
 
     Invoke-CIPPRestMethod -Endpoint $Endpoint -Params $Params
