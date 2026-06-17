@@ -21,6 +21,13 @@ Retrieves all assignment filters for the specified tenant.
 Get-CIPPAssignmentFilters -CustomerTenantID "contoso.onmicrosoft.com" -FilterId "12345678-1234-1234-1234-123456789012"
 Retrieves a specific assignment filter by its ID for the specified tenant.
 
+.PARAMETER UseReportDB
+When specified, retrieves the assignment filter list from the CIPP report database cache instead of live Microsoft Graph data. Only applies when no -FilterId is supplied. Use 'AllTenants' with this switch for cached cross-tenant data.
+
+.EXAMPLE
+Get-CIPPAssignmentFilters -CustomerTenantID "contoso.onmicrosoft.com" -UseReportDB
+Retrieves the cached assignment filter list for the specified tenant from the report database.
+
 .NOTES
 This function requires appropriate permissions to access Microsoft Endpoint Manager data through the CIPP API.
 #>
@@ -31,14 +38,17 @@ function Get-CIPPAssignmentFilters {
         [Parameter(Mandatory = $true)]
         [string]$CustomerTenantID,
         [Parameter(Mandatory = $false)]
-        [guid]$FilterId
+        [guid]$FilterId,
+        [Parameter(Mandatory = $false)]
+        [switch]$UseReportDB
     )
 
     Write-Verbose "Retrieving assignment filters for tenant: $CustomerTenantID"
-    
+
     $endpoint = '/api/ListAssignmentFilters'
     $params = @{
         tenantFilter = $CustomerTenantID
+        UseReportDB  = $UseReportDB.IsPresent
     }
     
     if ($FilterId) {

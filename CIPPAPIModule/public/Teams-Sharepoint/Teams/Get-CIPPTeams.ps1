@@ -11,6 +11,9 @@ The customer tenant ID for which to retrieve teams sites. This parameter is mand
 .PARAMETER ID
 The ID of the teams site to retrieve. This parameter is optional.
 
+.PARAMETER UseReportDB
+When specified, retrieves the Teams list from the CIPP report database cache instead of live data. Only applies to the list view (when no -ID is supplied). Use 'AllTenants' with this switch for cached cross-tenant data.
+
 .EXAMPLE
 Get-CIPPTeams -CustomerTenantID "contoso.onmicrosoft.com"
 Retrieves all teams sites for the "contoso.onmicrosoft.com" tenant.
@@ -18,6 +21,10 @@ Retrieves all teams sites for the "contoso.onmicrosoft.com" tenant.
 .EXAMPLE
 Get-CIPPTeams -CustomerTenantID "contoso.onmicrosoft.com" -ID "12345"
 Retrieves the teams site with the ID "12345" for the "contoso.onmicrosoft.com" tenant.
+
+.EXAMPLE
+Get-CIPPTeams -CustomerTenantID "contoso.onmicrosoft.com" -UseReportDB
+Retrieves the cached Teams list for the "contoso.onmicrosoft.com" tenant from the report database.
 #>
 
 
@@ -27,7 +34,9 @@ function Get-CIPPTeams {
         [Parameter(Mandatory = $true)]
         [string]$CustomerTenantID,
         [Parameter(Mandatory = $false)]
-        [string]$ID
+        [string]$ID,
+        [Parameter(Mandatory = $false)]
+        [switch]$UseReportDB
     )
 
     Write-Verbose "Getting teams sites for $CustomerTenantID"
@@ -36,6 +45,7 @@ function Get-CIPPTeams {
         tenantFilter = $CustomerTenantID
         type         = if ($ID) { 'team' } else { 'list' }
         ID           = $id
+        UseReportDB  = $UseReportDB.IsPresent
     }
 
     Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
