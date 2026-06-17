@@ -29,6 +29,14 @@ PS> Get-CIPPOneDriveList -CustomerTenantID "example.com" -UserUPN "user@example.
 
 Retrieves a list of OneDrive sites for the customer tenant with the ID "example.com" and the specified user's UPN "user@example.com".
 
+.PARAMETER UseReportDB
+When specified, retrieves OneDrive usage from the CIPP report database cache instead of live data. Use 'AllTenants' with this switch for cached cross-tenant data.
+
+.EXAMPLE
+PS> Get-CIPPOneDriveList -CustomerTenantID "example.com" -UseReportDB
+
+Retrieves cached OneDrive usage for the customer tenant with the ID "example.com" from the report database.
+
 #>
 function Get-CIPPOneDriveList {
     [CmdletBinding()]
@@ -38,7 +46,9 @@ function Get-CIPPOneDriveList {
         [Parameter(Mandatory = $false)]
         [switch]$urlonly,
         [Parameter(Mandatory = $false)]
-        [string]$UserUPN
+        [string]$UserUPN,
+        [Parameter(Mandatory = $false)]
+        [switch]$UseReportDB
     )
 
     Write-Verbose "Getting sites for $CustomerTenantID"
@@ -47,6 +57,7 @@ function Get-CIPPOneDriveList {
         tenantFilter = $CustomerTenantID
         type         = 'OneDriveUsageAccount'
         userupn      = $UserUPN
+        UseReportDB  = $UseReportDB.IsPresent
     }
 
     if ($urlonly) {
