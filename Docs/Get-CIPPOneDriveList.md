@@ -17,6 +17,10 @@ Specifies whether to return only the URLs of the OneDrive sites. If this switch 
 > ![Foo](https://img.shields.io/badge/Type-String-Blue?) ![Foo](https://img.shields.io/badge/Mandatory-FALSE-Green?) \
 The user's UPN (User Principal Name) for which to retrieve the OneDrive sites. This parameter is optional.
 
+  ## **-UseReportDB**
+> ![Foo](https://img.shields.io/badge/Type-SwitchParameter-Blue?) ![Foo](https://img.shields.io/badge/Mandatory-FALSE-Green?) ![Foo](https://img.shields.io/badge/DefaultValue-False-Blue?color=5547a8)\
+When specified, retrieves OneDrive usage from the CIPP report database cache instead of live data. Use 'AllTenants' with this switch for cached cross-tenant data.
+
  #### EXAMPLE 1
 ```powershell
 PS>Get-CIPPOneDriveList -CustomerTenantID "example.com"
@@ -34,5 +38,11 @@ Retrieves a list of OneDrive site URLs for the customer tenant with the ID "exam
 PS>Get-CIPPOneDriveList -CustomerTenantID "example.com" -UserUPN "user@example.com"
 
 Retrieves a list of OneDrive sites for the customer tenant with the ID "example.com" and the specified user's UPN "user@example.com".
+```
+ #### EXAMPLE 4
+```powershell
+PS>Get-CIPPOneDriveList -CustomerTenantID "example.com" -UseReportDB
+
+Retrieves cached OneDrive usage for the customer tenant with the ID "example.com" from the report database.
 ```
 

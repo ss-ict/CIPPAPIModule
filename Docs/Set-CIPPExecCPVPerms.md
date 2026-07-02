@@ -1,6 +1,6 @@
 # Set-CIPPExecCPVPerms
 ## SYNOPSIS
-Sets the CPV (Customer Provided Values) permissions for a specific customer tenant.
+Sets the CPV (Control Panel Vendor) permissions for a specific customer tenant.
 ## DESCRIPTION
 The Set-CIPPExecCPVPerms function is used to refresh the CPV permissions for a specified customer tenant. It calls the Invoke-CIPPRestMethod function internally to make the REST API call.
 # PARAMETERS
@@ -11,7 +11,7 @@ Specifies the ID of the customer tenant for which the CPV permissions need to be
 
   ## **-ResetSP**
 > ![Foo](https://img.shields.io/badge/Type-Boolean-Blue?) ![Foo](https://img.shields.io/badge/Mandatory-FALSE-Green?) ![Foo](https://img.shields.io/badge/DefaultValue-False-Blue?color=5547a8)\
-Specifies whether to reset the Stored Procedure (SP) associated with the CPV permissions. The valid values are "true" and "false". This parameter is optional and defaults to "false".
+Specifies whether delete the Service Principal (SP) associated with the CPV permissions and re-add it. The valid values are "true" and "false". This parameter is optional and defaults to "false".
 
  #### EXAMPLE 1
 ```powershell
